@@ -1,47 +1,86 @@
-var path = require('path');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-module.exports = {
-  entry: {
-    index: './src/index.js'
-  },
-  output: {
-    path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
-    filename: '[name].js',
-    libraryTarget: 'commonjs2'//意味着模块用于 CommonJS 环境：
-  },
-  devtool: 'source-map',
-  module: {
-    rules: [
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader',
-        exclude: /node_modules/
-      },
-      {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/
-      },
-      {
-        test: /\.md$/,
-        exclude: /node_modules/,
-        use: [
-          { loader: "html-loader" },
-          {
-            loader: path.resolve(__dirname, "./loaders/md.loader1.js")
-          }
-        ]
-      }
-    ],
-  },
-  plugins: [
-    new HtmlWebpackPlugin({ template: 'public/index.html' }),
-    new webpack.HotModuleReplacementPlugin()
-  ],
-  devServer: {
-    port: 5000,
-    contentBase: path.join(__dirname, 'dist')
-  }
+const path = require('path');
 
+const HtmlWebPackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+
+module.exports = (env, argv) => {
+    const devMode = argv.mode !== 'production'
+    return {
+        entry: [
+            path.join(__dirname, './src/main.js')
+        ],
+        module: {
+            rules: [
+                {
+                    test: /\.vue$/,
+                    loader: 'vue-loader',
+                    options: {
+                        loaders: {}
+                        // other vue-loader options go here
+                    }
+                },
+                {
+                    test: /\.(js)$/,
+                    exclude: /node_modules/,
+                    use: {
+                        loader: "babel-loader"
+                    }
+                },
+                {
+                    test: /\.html$/,
+                    use: [{
+                        loader: "html-loader",
+                        options: {
+                            minimize: true
+                        }
+                    }]
+                },
+                {
+                    test: /\.scss$/,
+                    use: [
+                        devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+                        'css-loader',
+                        'postcss-loader',
+                        'sass-loader',
+                    ]
+                },
+
+                {
+                    test: /\.(png|svg|jpg|gif)$/,
+                    use: [
+                        'file-loader'
+                    ]
+                },
+                {
+                    test: /\.md$/,
+                    exclude: /node_modules/,
+                    use: [
+                        { loader: "html-loader" },
+                        {
+                            loader: path.resolve(__dirname, "./loaders/md.loader.js")
+                        }
+                    ]
+                }
+            ]
+        },
+        resolve: {
+            alias: {
+                'vue$': 'vue/dist/vue.esm.js'
+            }
+        },
+        plugins: [
+            new CleanWebpackPlugin(['dist']),
+            new HtmlWebPackPlugin({
+                template: "./public/index.html",
+                filename: "./index.html"
+            }),
+            new MiniCssExtractPlugin({
+                filename: "[name].css",
+                chunkFilename: "[id].css"
+            }),
+            new VueLoaderPlugin()
+        ]
+    }
 };
