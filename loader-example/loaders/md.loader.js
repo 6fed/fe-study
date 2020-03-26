@@ -1,5 +1,5 @@
 const marked = require("marked");
-const path = require('path')
+ 
 
 const loaderUtils = require("loader-utils");
 module.exports = function (content, map, meta) {
