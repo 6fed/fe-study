@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
+
 module.exports = (env, argv) => {
     const devMode = argv.mode !== 'production'
     return {
@@ -49,9 +50,17 @@ module.exports = (env, argv) => {
 
                 {
                     test: /\.(png|svg|jpg|gif)$/,
-                    use: [
-                        'file-loader'
-                    ]
+                    use: [{
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name].[ext].webp'
+                        }
+                    }, {
+                        loader: path.resolve(__dirname, "./loaders/convert2Webp.loader.js"),
+                        options: {
+                            quality: 70
+                        }
+                    }]
                 },
                 {
                     test: /\.md$/,

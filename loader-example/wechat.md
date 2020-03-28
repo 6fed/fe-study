@@ -4,6 +4,8 @@
 
 
 看完这篇webpack-loader，不再怕面试官问了 https://mp.weixin.qq.com/s/-ZE7GnYG9uj4gPaPTGTIzA
+10分钟搞定 style-loader：https://mp.weixin.qq.com/s/Vh7E6d4_pOs3Qjuj3imhBQ
+
 webpack原理解析（二）实现一个简单的Loader：https://mp.weixin.qq.com/s/nXZmzcV9lgdrj1JAOQolVQ
 
 
@@ -16,6 +18,6 @@ webpack系列之四loader详解2：https://mp.weixin.qq.com/s/v8i02dhb7yRnfQbgca
 webpack 系列之四 loader 详解3：https://mp.weixin.qq.com/s/yGibmamkMiyj9MaXsdalhw
 深入Webpack-如何编写Loader：https://mp.weixin.qq.com/s/wJibAvQA7A6YdcGzk_vTHg
 
-10分钟搞定 style-loader：https://mp.weixin.qq.com/s/Vh7E6d4_pOs3Qjuj3imhBQ
+
 你知道vue-loader是怎么工作的吗？：https://mp.weixin.qq.com/s/qZUHwKqHKrUu_fYlE5aIEg
 写一个自己的babel-loader：https://mp.weixin.qq.com/s/RdIMRMGE8zisEH_g3wgAkA
