@@ -1,6 +1,6 @@
 const CWebp = require('cwebp').CWebp
-const { loaderUtils } = require("loader-utils");
-const { validateOptions } = require('schme')
+const { getOptions } = require("loader-utils");
+const validateOptions = require("schema-utils");
 /**
  * 普通图片转 .webp图片
  * @param {string | buffer} img 图片绝对路径或二进制流
@@ -25,21 +25,30 @@ const schema = {
   "type": "object"
 }
 
-module.exports = async function (content, map, meta) {
-  // 异步模式
-  let callback = this.async()
-  // 获取 options
-  const options =  getOptions(this) || {}
-  // 验证 options
-  validateOptions(schema, options, {
-    name: 'webp Loader',
-    baseDataPath: 'options'
-  })
-  try {
-    // 普通图片转 .webp
-    let buffer = await convertToWebp(content, options.quality)
-    callback(null, buffer)
-  } catch (err) {
-    callback(err)
+
+module.exports = async function (source) {
+  if (source instanceof Buffer) {
+    // 异步模式
+    let callback = this.async()
+    // 获取 options
+    const options = getOptions(this) || {}
+    // 验证 options
+    validateOptions(schema, options, {
+      name: 'webp Loader',
+      baseDataPath: 'options'
+    })
+    try {
+      if (content instanceof Buffer) {
+        // 普通图片转 .webp
+        let buffer = await convertToWebp(content, options.quality)
+        callback(null, buffer)
+        //当然我本身也可以返回二进制数据提供给下一个loader
+      }
+
+    } catch (err) {
+      callback(err)
+    }
   }
-};
+}
+moudle.exports.raw = true; //不设置，就会拿到字符串
+

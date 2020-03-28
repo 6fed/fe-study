@@ -53,12 +53,7 @@ module.exports = (env, argv) => {
                     use: [{
                         loader: 'file-loader',
                         options: {
-                            name: '[name].[ext].webp'
-                        }
-                    }, {
-                        loader: path.resolve(__dirname, "./loaders/convert2Webp.loader.js"),
-                        options: {
-                            quality: 70
+                            name: '[name].[ext]'
                         }
                     }]
                 },
@@ -68,7 +63,7 @@ module.exports = (env, argv) => {
                     use: [
                         { loader: "html-loader" },
                         {
-                            loader: path.resolve(__dirname, "./loaders/md.loader.js")
+                            loader: path.resolve(__dirname, "./loaders/md-loader.js")
                         }
                     ]
                 }

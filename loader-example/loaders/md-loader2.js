@@ -1,5 +1,5 @@
 const marked = require("marked");
-
+//将markdown文件转化成html字符串
 const loaderUtils = require("loader-utils");
 module.exports = function (content) {
     this.cacheable && this.cacheable();
