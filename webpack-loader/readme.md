@@ -40,7 +40,7 @@ import Styles from 'style-loader!css-loader?modules!./styles.css';
 
 当链式调用多个 loader 的时候，请记住它们会以相反的顺序执行。取决于数组写法格式，从右向左或者从下向上执行。
 
-### 获取loader的options
+### 使用 loader-utils 能够编译 loader 的配置，还可以通过 schema-utils 进行验证
 ```js
 import { getOptions } from 'loader-utils'; 
 import { validateOptions } from 'schema-utils';  
@@ -64,7 +64,7 @@ export default function(content) {
 
 如果返回结果只有一个，也可以直接使用 return 返回结果。但是，如果有些情况下还需要返回其他内容，如sourceMap或是AST语法树，这个时候可以借助webpack提供的api `this.callback`
 
-```
+```js
 this.callback(
   err: Error | null,
   content: string | Buffer,

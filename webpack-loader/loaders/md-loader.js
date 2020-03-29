@@ -10,9 +10,9 @@ class MdParser {
         console.log("md转抽象语法树")
         this.data = this.traverse(this.data);
     }
-    traverse(node) {
-        console.log(node)
-
+    traverse(ast) {
+        console.log(ast)
+      
         switch (node) {
             case "bold":
             // **text**

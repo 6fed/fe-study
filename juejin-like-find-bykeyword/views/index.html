@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <title>首页</title>
+</head>
+
+<body id="app">
+    <div class="page-header">
+        <h2 style="text-align: center"></h2>
+    </div>
+    <div class="form">
+
+    </div>
+    <a onclick="aaa">根据标题和标签检索文章</a>
+    <ul class="list-group">
+        {{each result}}
+        <li class="list-group-item">
+            {{$index+1}}
+            {{$value.user.username}}
+            <img src="https://b-gold-cdn.xitu.io/v3/static/img/zan.e9d7698.svg">
+            <a href="{{$value.originalUrl}}" target="_blank">{{$value.title}}</a>
+            <img src="https://b-gold-cdn.xitu.io/v3/static/img/zan.e9d7698.svg">
+            <span>{{$value.collectionCount}}</span>
+            {{each $value.tags}}
+            {{$value.title}}
+            {{/each}}
+
+
+        </li>
+        {{/each}}
+    </ul>
+</body>
+ 
+
+<script>
+function aaa(){
+    location.hash="ddd"
+}
+</script>
+
+</html>
