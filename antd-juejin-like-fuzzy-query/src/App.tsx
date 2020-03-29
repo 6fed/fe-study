@@ -1,8 +1,20 @@
 import * as React from 'react';
 import axios from 'axios'
 import { Table, Tag, Button } from 'antd';
+import './App.css'
 type Props = {
 };
+interface Article {
+  title: string;
+  author: 'string';
+  objectId: string;
+  type: string;
+  tags: any[];
+  collectionCount: number;
+  viewsCount: number;
+  createdAt: string;
+  description: string
+}
 // originalUrl
 const columns = [
   {
@@ -41,21 +53,46 @@ const columns = [
     title: '点赞数目',
     dataIndex: 'collectionCount',
     key: 'collectionCount',
-    sorter: (a: Number, b: Number) => a - b,
-    sortDirections: ['descend', 'ascend'],
+    sorter: (a: Article, b: Article) => a.collectionCount - b.collectionCount,
+
   },
   {
     title: '阅读量',
     dataIndex: 'viewsCount',
     key: 'viewsCount',
+    sorter: (a: Article, b: Article) => a.viewsCount - b.viewsCount,
   },
   {
     title: '发布时间',
     dataIndex: 'createdAt',
     key: 'createdAt',
     render: (text: string) => <div>{text}</div>,
+    // sorter: (a: Article, b: Article) => a.viewsCount - b.viewsCount,
   },
 ];
+
+
+//  getDate(date: string): string ={
+//   var date = new Date(1398250549490);
+//   Y = date.getFullYear() + '-';
+//   M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+//   D = date.getDate() + ' ';
+//   h = date.getHours() + ':';
+//   m = date.getMinutes() + ':';
+//   s = date.getSeconds();
+//   console.log(Y + M + D + h + m + s);
+//   return something.length;
+// }
+// let standardTime: (date: string) => string = {
+//   const date = new Date(date);
+//   Y = date.getFullYear() + '-';
+//   M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+//   D = date.getDate() + ' ';
+//   h = date.getHours() + ':';
+//   m = date.getMinutes() + ':';
+//   s = date.getSeconds();
+//   return "something.length";
+// }
 
 
 type State = {
@@ -97,11 +134,11 @@ export default class App extends React.Component<Props, State> {
           columns={columns}
           dataSource={likeList}
           expandable={{
-            expandedRowRender: record => <p style={{ margin: 0 }}>
+            expandedRowRender: record => <p >
               {record.description}
-              <a href="https://juejin.im" target="_blank">阅读全文</a>
+              <a href="#components-anchor-demo-basic" target="_blank">阅读全文</a>
             </p>,
-            rowExpandable: record => record.name !== '没有摘要',
+            rowExpandable: record => record.description !== '没有摘要',
           }}
           pagination={false}
           size="small"
