@@ -9,7 +9,7 @@ import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 
 export default class Hello extends Component {
-  render() {
+  render () {
     return (
       <Router>
         <div>

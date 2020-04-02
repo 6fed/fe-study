@@ -6,7 +6,7 @@ let result = []
 app.use('/public', express.static('./public'))
 app.engine('html', require('express-art-template'))
 
-let pageSize = 20
+let pageSize = 30
 let params = {
     page: 0,
     pageSize
@@ -42,7 +42,7 @@ function getInfo(page = 0, userId) {
         if (err) {
             return console.log(err)
         }
-
+        // console.log(res.text)
         let entryList = JSON.parse(res.text).d.entryList
         const total = JSON.parse(res.text).d.total
         let pages = Math.ceil(total / pageSize)
@@ -62,15 +62,16 @@ function getInfo(page = 0, userId) {
 
             })
         }
+     
 
     })
 }
-
+ 
 app.get('/api/getList/:userId', (req, res, next) => {
-    getInfo(0, req.params.userId, req.query)
+    getInfo(0, req.params.userId)
     res.status(200),
         res.json([...result])
 })
-app.listen(3000, () => {
+app.listen(7000, () => {
     console.log('running...')
 })
