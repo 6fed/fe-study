@@ -1,10 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react';
 import { VariableSizeGrid as Grid } from 'react-window';
 import ResizeObserver from 'rc-resize-observer';
 import classNames from 'classnames';
 import { Table } from 'antd';
-// interface 
-function VirtualTable (props) {
+import { TableProps } from 'antd/es/table'
+import React, { useState, useEffect, useRef } from 'react';
+
+interface VirtualTableProps extends TableProps {
+  columns: Array<any>;
+  scroll: any;
+  className?: any;
+}
+
+const VirtualTable: React.FC<VirtualTableProps> = props => {
   const { columns, scroll, className } = props;
   const [tableWidth, setTableWidth] = useState(0);
 
@@ -36,7 +43,7 @@ function VirtualTable (props) {
   });
 
   const resetVirtualGrid = () => {
-    gridRef.current.resetAfterIndices({
+    gridRef.current && gridRef.current.resetAfterIndices({
       columnIndex: 0,
       shouldForceUpdate: false,
     });
@@ -79,12 +86,11 @@ function VirtualTable (props) {
     );
   };
 
+
   return (
-    <ResizeObserver
-      onResize={({ width }) => {
-        setTableWidth(width);
-      }}
-    >
+    <ResizeObserver onResize={({ width }) => {
+      setTableWidth(width);
+    }}>
       <Table
         {...props}
         className={classNames(className, 'virtual-table')}
@@ -96,37 +102,6 @@ function VirtualTable (props) {
       />
     </ResizeObserver>
   );
-}
+};
 
-// Usage
-const columns = [
-  { title: 'A', dataIndex: 'key', width: 150 },
-  { title: 'B', dataIndex: 'key' },
-  { title: 'C', dataIndex: 'key' },
-  { title: 'D', dataIndex: 'key' },
-  { title: 'E', dataIndex: 'key', width: 200 },
-  { title: 'F', dataIndex: 'key', width: 100 },
-];
-
-const data = [];
-
-for (let i = 0; i < 100000; i += 1) {
-  data.push({
-    key: i,
-  });
-}
-export default class ArticleList extends React.Component<Props, State> {
-  state: State = {
-
-  };
-
-
-  componentDidMount () {
-
-  }
-  render () {
-    return (
-      <VirtualTable columns={columns} dataSource={data} scroll={{ y: 300, x: '100vw' }} />
-    );
-  }
-}
+export default VirtualTable;

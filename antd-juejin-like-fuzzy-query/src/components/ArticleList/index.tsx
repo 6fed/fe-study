@@ -9,8 +9,8 @@ import { ColumnProps } from 'antd/es/table';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import './table.css';
-
 import { Article, State, Props, filterDropdownType } from './interface';
+import VirtualTable from './virtualList'
 const { Option } = Select;
 
 
@@ -24,13 +24,12 @@ export default class ArticleList extends React.Component<Props, State> {
     searchText: '',
     searchedColumn: '',
     loading: true,
-    size: 'default',
     // rowSelection: {},
     scroll: undefined,
-    tableLayout: undefined,
+
     filteredInfo: null,
   };
-  searchInput: Input | null;
+  searchInput: any;
   constructor(props: any) {
     super(props);
     this.searchInput = null;
@@ -94,8 +93,8 @@ export default class ArticleList extends React.Component<Props, State> {
 
       if (visible) {
         setTimeout(() =>
-          console.log("onFilterDropdownVisibleChange", this)
-          // this.searchInput.select()
+          // console.log("onFilterDropdownVisibleChange", this)
+          this.searchInput.select()
         );
       }
     },
@@ -141,6 +140,11 @@ export default class ArticleList extends React.Component<Props, State> {
       })
     }
   };
+  clearAll = () => {
+    this.setState({
+      filteredInfo: null,
+    });
+  };
   render () {
     let widthArray = ["35%", "8%", "8%", "15%", "10%", "8%", "8%", "8%"]
     const columns: ColumnProps<Article>[] = [
@@ -166,18 +170,14 @@ export default class ArticleList extends React.Component<Props, State> {
         key: 'type',
         width: widthArray[2],
         sorter: (a: Article, b: Article) => a.type.localeCompare(b.type, 'zh'),
-        filters: [
-          { text: 'Joe', value: 'Joe' },
-          { text: 'Jim', value: 'Jim' },
-        ],
-        // filteredValue: filteredInfo.name || null,
-        // onFilter: (value: string, record: Article) => record.tags.includes(value),
+        ...this.getColumnSearchProps('type', "类别"),
       },
       {
         title: '标签',
         key: 'tags',
         dataIndex: 'tags',
         width: widthArray[3],
+
         render: (tags: any[]) => (
           <span>
             {tags.map(tag => {
@@ -230,7 +230,7 @@ export default class ArticleList extends React.Component<Props, State> {
       <div>
         <Form
           layout="inline"
-          className="components-table-demo-control-bar"
+          className="control-bar"
           style={{ marginBottom: 16 }}
         >
           {/* <Form.Item label="是否开启复选框">
@@ -256,23 +256,25 @@ export default class ArticleList extends React.Component<Props, State> {
             </Select>
           </Form.Item>
         </Form>
-        <Table
+        {/* <Table
           rowKey={record => record.objectId}
-          tableLayout="auto"
+          // tableLayout="auto"
           columns={columns}
           dataSource={likeList}
           loading={loading}
-          expandable={{
-            expandedRowRender: (record: Article) => <p >
-              {record.description}
-              <a href={record.originalUrl} rel="noopener noreferrer" target="_blank">阅读全文</a>
-            </p>,
-            rowExpandable: (record: Article) => record.description !== '没有摘要',
-          }}
+          // expandable={{
+          //   expandedRowRender: (record: Article) => <p >
+          //     {record.description}
+          //     <a href={record.originalUrl} rel="noopener noreferrer" target="_blank">阅读全文</a>
+          //   </p>,
+          //   rowExpandable: (record: Article) => record.description !== '没有摘要',
+          // }}
           pagination={pagination}
           size="small"
           scroll={{ y: 500 }}
-        />
+        /> */}
+
+        {/* <VirtualTable className="virtual-table" columns={columns} dataSource={likeList} scroll={{ y: 500, x: '100vw' }} /> */}
 
       </div>
     );

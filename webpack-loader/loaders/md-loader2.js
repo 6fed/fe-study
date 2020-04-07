@@ -8,7 +8,6 @@ module.exports = function (content) {
     // 涉及到加载模块，异步loader
     try {
         marked.setOptions(options);
-
         return marked(content)
     } catch (err) {
         this.emitError(err);

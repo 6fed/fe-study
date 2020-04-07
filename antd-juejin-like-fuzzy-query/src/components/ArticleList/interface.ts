@@ -1,5 +1,3 @@
-
-
 import { SpinProps } from 'antd/es/spin';
 export interface Article {
   title: string;
@@ -21,11 +19,7 @@ export interface State {
   searchText: string,
   searchedColumn: string,
   loading: boolean | SpinProps | undefined,
-  size: string,
-  expandable?: boolean | undefined | Object;
-  // rowSelection: Object,
   scroll: undefined,
-  tableLayout: undefined,
   filteredInfo: null | string[]
 };
 interface SearchFunc {

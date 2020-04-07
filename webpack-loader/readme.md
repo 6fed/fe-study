@@ -38,7 +38,7 @@ module.exports = {
 import Styles from 'style-loader!css-loader?modules!./styles.css';
 ```
 
-当链式调用多个 loader 的时候，请记住它们会以相反的顺序执行。取决于数组写法格式，从右向左或者从下向上执行。
+当链式调用多个 loader 的时候，请记住它们会以相反的顺序执行。取决于数组写法格式，从右向左或者从下向上执行。像流水线一样，挨个处理每个loader，前一个loader的结果会传递给下一个loader。
 
 ### 使用 loader-utils 能够编译 loader 的配置，还可以通过 schema-utils 进行验证
 ```js
